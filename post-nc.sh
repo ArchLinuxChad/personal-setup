@@ -3,8 +3,7 @@
 HOMEDIR="/home/$USER"
 
 create_dirs() {
-  mkdir $HOMEDIR/github-repos
-  mkdir $HOMEDIR/other-repos
+  mkdir $HOMEDIR/github-repos mkdir $HOMEDIR/other-repos
   mkdir $HOMEDIR/.local/share/fonts
   [[ ! -d $HOMEDIR/.config ]] && mkdir $HOMEDIR/.config
 }
@@ -58,6 +57,8 @@ setup_misc() {
 
   sudo systemctl enable tlp.service
   sudo tlp start
+
+  sudo systemctl enable sddm.service
 }
 
 setup_aa() {
