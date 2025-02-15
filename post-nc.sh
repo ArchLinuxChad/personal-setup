@@ -8,15 +8,6 @@ create_dirs() {
   [[ ! -d $HOMEDIR/.config ]] && mkdir $HOMEDIR/.config
 }
 
-install_paru() {
-  sudo pacman -S --needed git base-devel
-  cd $HOMEDIR/other-repos
-  git clone https://aur.archlinux.org/paru.git
-  cd paru
-  makepkg -si
-  cd $HOMEDIR
-}
-
 install_apps() {
   paru -S --needed - < $HOMEDIR/nc/linux/dotfiles/pkglist.txt
 }
@@ -64,6 +55,7 @@ setup_misc() {
 setup_aa() {
   sudo systemctl enable apparmor.service
   sudo sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT=\"*\"/GRUB_CMDLINE_LINUX_DEFAULT=\"loglevel=3 quiet lsm=landlock,lockdown,yama,integrity,apparmor,bpf\"/' /etc/default/grub
+  sudo grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 fix_screen_tearing() {
@@ -83,7 +75,6 @@ install_nvchad() {
 
 main() {
   create_dirs
-  install_paru
   install_apps
   setup_dotfiles
   setup_grub
